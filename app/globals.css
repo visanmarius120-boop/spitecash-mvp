@@ -1,0 +1,274 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #111111;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.hero {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 64px 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 460px;
+  gap: 48px;
+  align-items: start;
+}
+
+.eyebrow {
+  color: #666;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(40px, 7vw, 72px);
+  line-height: 0.95;
+  margin: 0 0 24px;
+  letter-spacing: -0.06em;
+}
+
+h2 {
+  margin: 0 0 12px;
+}
+
+.lead {
+  color: #444;
+  font-size: 20px;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+.cta,
+button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  border-radius: 14px;
+  background: #111;
+  color: #fff;
+  padding: 14px 18px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  width: 100%;
+  font-size: 16px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 40px 0;
+}
+
+.cards article,
+.infoBox,
+.note,
+form {
+  border: 1px solid #e5e5e5;
+  border-radius: 24px;
+  padding: 22px;
+}
+
+.cards p,
+.infoBox,
+.note {
+  color: #555;
+}
+
+.infoBox {
+  margin-bottom: 18px;
+}
+
+.infoBox ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 24px;
+  padding-left: 20px;
+}
+
+.warning {
+  background: #fff8e6;
+  border-color: #f5df9e;
+}
+
+.note {
+  background: #f5f5f5;
+}
+
+.formShell {
+  position: sticky;
+  top: 24px;
+}
+
+form {
+  background: #fff;
+}
+
+.formSection {
+  padding-bottom: 26px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid #eee;
+}
+
+.formSection:last-of-type {
+  border-bottom: 0;
+}
+
+label,
+legend {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #d4d4d4;
+  border-radius: 12px;
+  padding: 12px;
+  font: inherit;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+.radioGroup label,
+.checkLabel {
+  font-weight: 400;
+}
+
+.help {
+  background: #fff8e6;
+  border: 1px solid #f5df9e;
+  border-radius: 14px;
+  padding: 12px;
+  color: #5f4500;
+  font-size: 14px;
+}
+
+.success {
+  background: #edfdf3;
+  color: #064e2b;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.error {
+  background: #fff0f0;
+  color: #8a1111;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+/* Footer */
+
+.footer {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  color: #666;
+  font-size: 14px;
+}
+
+.footer a {
+  color: #666;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #111;
+  text-decoration: underline;
+}
+
+/* Legal pages */
+
+.legalPage {
+  width: min(820px, 100%);
+  margin: 0 auto;
+  padding: 72px 24px;
+  line-height: 1.7;
+}
+
+.legalPage h1 {
+  font-size: clamp(36px, 6vw, 64px);
+  margin-bottom: 12px;
+}
+
+.legalPage h2 {
+  margin-top: 36px;
+  font-size: 24px;
+}
+
+.legalPage p,
+.legalPage li {
+  color: #444;
+  font-size: 17px;
+}
+
+.legalPage ul {
+  padding-left: 24px;
+}
+
+.legalNote {
+  margin-top: 48px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #fff8e6;
+  border: 1px solid #f5df9e;
+}
+
+@media (max-width: 980px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .formShell {
+    position: static;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .infoBox ul {
+    grid-template-columns: 1fr;
+  }
+}
