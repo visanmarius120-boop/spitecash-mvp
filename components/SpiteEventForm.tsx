@@ -46,7 +46,12 @@ export function SpiteEventForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+  onSubmit={handleSubmit}
+  method="post"
+  action="/api/submit-spite-event"
+  encType="multipart/form-data"
+>
       <section className="formSection">
         <h2>1. The app that charged you</h2>
 
