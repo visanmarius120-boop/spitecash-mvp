@@ -1,3 +1,4 @@
+import { sendTransactionalEmail } from "@/lib/email";
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import {
