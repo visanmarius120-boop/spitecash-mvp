@@ -221,6 +221,50 @@ export async function POST(request: Request) {
       }
     }
 
+    // ── Email de confirmare catre user via Brevo ─────────────────────────
+    try {
+      await sendTransactionalEmail({
+        to: email,
+        subject: "SpiteCash — we received your case",
+        html: `
+          <div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:32px 24px">
+            <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6f6a60;margin:0 0 8px">SPITECASH</p>
+            <h1 style="font-size:22px;font-weight:700;color:#16130f;margin:0 0 16px">We received your case.</h1>
+            <p style="font-size:15px;color:#444;line-height:1.6;margin:0 0 12px">
+              Thank you for submitting evidence against <strong>${merchantName}</strong>.
+              We review cases manually and will contact you at this address once we reach a decision.
+            </p>
+            <div style="background:#f4f4f0;border-left:4px solid #0b7a45;padding:14px 18px;margin:20px 0;font-size:14px;color:#333">
+              <strong>Case ID:</strong> ${spiteEvent.id}<br>
+              <strong>Amount:</strong> ${amount} ${currency}<br>
+              <strong>Merchant:</strong> ${merchantName}
+            </div>
+            <p style="font-size:14px;color:#6f6a60;line-height:1.6">
+              If your case is valid, you will receive €3 within 7 days of approval.
+              Every payout is published on the <a href="https://spitecash.com/payouts" style="color:#0b7a45">wall of payouts</a>.
+            </p>
+            <p style="font-size:13px;color:#999;margin-top:28px">
+              SpiteCash · <a href="https://spitecash.com" style="color:#999">spitecash.com</a>
+            </p>
+          </div>`,
+        text: `SpiteCash — Case received
+
+Thank you for submitting evidence against ${merchantName}.
+
+Case ID: ${spiteEvent.id}
+Amount: ${amount} ${currency}
+Merchant: ${merchantName}
+
+We review cases manually. If valid, €3 will be paid within 7 days.
+
+SpiteCash · spitecash.com`,
+      });
+    } catch (emailError) {
+      // Email esuat nu blocheaza submisia — logam si continuam
+      console.error("[EMAIL] Brevo send failed:", emailError);
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
     return NextResponse.json({
       ok: true,
       eventId: spiteEvent.id,
