@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 // FILL THESE IN. Anything left containing "[" renders highlighted.
 // ─────────────────────────────────────────────────────────────
 const ID = {
-  entity: "[LEGAL ENTITY NAME + FORM, e.g. SpiteCash SRL]",
-  registration: "[COUNTRY, REGISTRY NO. / CUI]",
-  founder: "[YOUR NAME]",
-  founderLine: "[one honest sentence: background, why you built this]",
+  entity: "freelancer",
+  registration: "Romania",
+  founder: "Marius Visan",
+  founderLine: "I built this after being charged twice without knowing it.",
   contactEmail: "hello@spitecash.com",
   privacyEmail: "privacy@spitecash.com",
 };
