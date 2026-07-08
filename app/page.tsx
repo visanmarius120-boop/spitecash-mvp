@@ -10,10 +10,11 @@ export default function HomePage() {
           <h1>Did an app charge you after a free trial?</h1>
 
           <p className="lead">
-            Submit proof. If the event is valid, you may receive up to €3. We
-            use anonymized data to build an early-warning radar for toxic
-            trials, aggressive subscriptions, and hard-to-cancel digital
-            products.
+            Submit proof. If your case meets the{" "}
+            <a href="/bounty-rules">six published criteria</a>, you get €3 —
+            guaranteed, not &quot;up to&quot;. We use anonymized data to build
+            an early-warning radar for toxic trials, aggressive subscriptions,
+            and hard-to-cancel digital products.
           </p>
 
           <a href="#form" className="cta">
@@ -38,10 +39,12 @@ export default function HomePage() {
             </article>
 
             <article>
-              <h2>3. Valid cases may get paid</h2>
+              <h2>3. Valid cases get paid — €3, in 7 days</h2>
               <p>
-                Clear, recent, and relevant cases may receive a micro-bounty of
-                up to €3.
+                Meets the{" "}
+                <a href="/bounty-rules">six criteria</a>? €3 is yours,
+                guaranteed. Every payout goes on the{" "}
+                <a href="/payouts">public wall of payouts</a>.
               </p>
             </article>
           </div>
@@ -87,6 +90,9 @@ export default function HomePage() {
 
       <footer className="footer">
         <a href="/how-it-works">How it works</a>
+        <a href="/bounty-rules">Bounty rules</a>
+        <a href="/payouts">Payouts</a>
+        <a href="/about">About</a>
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms">Terms of Use</a>
       </footer>
