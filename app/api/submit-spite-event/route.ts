@@ -10,6 +10,8 @@ import {
   requiredNumber,
   requiredString,
   safeFilename,
+  validateEvidenceFile,
+  validateTotalEvidenceSize,
 } from "@/lib/validators";
 
 export const runtime = "nodejs";
@@ -18,6 +20,12 @@ type EvidenceUpload = {
   file: File;
   fileType: "trial_proof" | "payment_proof" | "other";
 };
+
+function evidenceLabel(fileType: EvidenceUpload["fileType"]): string {
+  if (fileType === "trial_proof") return "Trial proof";
+  if (fileType === "payment_proof") return "Payment proof";
+  return "Extra evidence";
+}
 
 export async function POST(request: Request) {
   try {
@@ -90,6 +98,12 @@ export async function POST(request: Request) {
         file: extraEvidence,
         fileType: "other",
       });
+    }
+
+    validateTotalEvidenceSize(evidenceUploads.map((item) => item.file));
+
+    for (const item of evidenceUploads) {
+      validateEvidenceFile(item.file, evidenceLabel(item.fileType));
     }
 
     const { data: user, error: userError } = await supabaseAdmin
@@ -221,7 +235,6 @@ export async function POST(request: Request) {
       }
     }
 
-    // ── Email de confirmare catre user via Brevo ─────────────────────────
     try {
       await sendTransactionalEmail({
         to: email,
@@ -260,10 +273,8 @@ We review cases manually. If valid, €3 will be paid within 7 days.
 SpiteCash · spitecash.com`,
       });
     } catch (emailError) {
-      // Email esuat nu blocheaza submisia — logam si continuam
       console.error("[EMAIL] Brevo send failed:", emailError);
     }
-    // ─────────────────────────────────────────────────────────────────────
 
     return NextResponse.json({
       ok: true,

@@ -65,3 +65,64 @@ export function safeFilename(filename: string): string {
     .replace(/-+/g, "-")
     .slice(0, 120);
 }
+
+const MAX_EVIDENCE_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB per file
+const MAX_TOTAL_EVIDENCE_SIZE_BYTES = 15 * 1024 * 1024; // 15MB total
+
+const ALLOWED_EVIDENCE_MIME_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+]);
+
+const ALLOWED_EVIDENCE_EXTENSIONS = [
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".webp",
+  ".pdf",
+];
+
+export function validateEvidenceFile(file: File, label = "Evidence file"): void {
+  if (!(file instanceof File)) {
+    throw new Error(`${label} is required.`);
+  }
+
+  if (file.size <= 0) {
+    throw new Error(`${label} is empty.`);
+  }
+
+  if (file.size > MAX_EVIDENCE_FILE_SIZE_BYTES) {
+    throw new Error(`${label} is too large. Maximum size is 5MB.`);
+  }
+
+  const mimeType = file.type.toLowerCase();
+  const filename = file.name.toLowerCase();
+
+  if (!ALLOWED_EVIDENCE_MIME_TYPES.has(mimeType)) {
+    throw new Error(
+      `${label} has an unsupported file type. Please upload JPG, PNG, WEBP, or PDF.`
+    );
+  }
+
+  const hasAllowedExtension = ALLOWED_EVIDENCE_EXTENSIONS.some((extension) =>
+    filename.endsWith(extension)
+  );
+
+  if (!hasAllowedExtension) {
+    throw new Error(
+      `${label} has an unsupported file extension. Please upload JPG, PNG, WEBP, or PDF.`
+    );
+  }
+}
+
+export function validateTotalEvidenceSize(files: File[]): void {
+  const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+
+  if (totalSize > MAX_TOTAL_EVIDENCE_SIZE_BYTES) {
+    throw new Error(
+      "Total evidence upload is too large. Maximum total size is 15MB."
+    );
+  }
+}
