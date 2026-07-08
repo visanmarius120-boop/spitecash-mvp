@@ -2,6 +2,103 @@
 
 import { FormEvent, useState } from "react";
 
+const EVIDENCE_ACCEPT =
+  ".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf";
+
+const MAX_EVIDENCE_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB per file
+const MAX_TOTAL_EVIDENCE_SIZE_BYTES = 15 * 1024 * 1024; // 15MB total
+
+const ALLOWED_EVIDENCE_MIME_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+]);
+
+const ALLOWED_EVIDENCE_EXTENSIONS = [
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".webp",
+  ".pdf",
+];
+
+type EvidenceField = {
+  value: FormDataEntryValue | null;
+  label: string;
+  required: boolean;
+};
+
+function formatBytes(bytes: number): string {
+  const megabytes = bytes / (1024 * 1024);
+  return `${megabytes.toFixed(1)}MB`;
+}
+
+function getEvidenceFile(field: EvidenceField): File | null {
+  if (!(field.value instanceof File) || field.value.size === 0) {
+    if (field.required) {
+      throw new Error(`${field.label} is required.`);
+    }
+
+    return null;
+  }
+
+  return field.value;
+}
+
+function validateEvidenceFile(file: File, label: string): void {
+  if (file.size > MAX_EVIDENCE_FILE_SIZE_BYTES) {
+    throw new Error(
+      `${label} is too large. Maximum size is 5MB. Current size: ${formatBytes(
+        file.size
+      )}.`
+    );
+  }
+
+  const mimeType = file.type.toLowerCase();
+  const filename = file.name.toLowerCase();
+
+  if (!ALLOWED_EVIDENCE_MIME_TYPES.has(mimeType)) {
+    throw new Error(
+      `${label} has an unsupported file type. Please upload JPG, PNG, WEBP, or PDF.`
+    );
+  }
+
+  const hasAllowedExtension = ALLOWED_EVIDENCE_EXTENSIONS.some((extension) =>
+    filename.endsWith(extension)
+  );
+
+  if (!hasAllowedExtension) {
+    throw new Error(
+      `${label} has an unsupported file extension. Please upload JPG, PNG, WEBP, or PDF.`
+    );
+  }
+}
+
+function validateEvidenceUploads(fields: EvidenceField[]): void {
+  const files = fields
+    .map((field) => {
+      const file = getEvidenceFile(field);
+
+      if (file) {
+        validateEvidenceFile(file, field.label);
+      }
+
+      return file;
+    })
+    .filter((file): file is File => file !== null);
+
+  const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+
+  if (totalSize > MAX_TOTAL_EVIDENCE_SIZE_BYTES) {
+    throw new Error(
+      `Total evidence upload is too large. Maximum total size is 15MB. Current total: ${formatBytes(
+        totalSize
+      )}.`
+    );
+  }
+}
+
 export function SpiteEventForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resultMessage, setResultMessage] = useState<string | null>(null);
@@ -18,6 +115,24 @@ export function SpiteEventForm() {
     const formData = new FormData(form);
 
     try {
+      validateEvidenceUploads([
+        {
+          value: formData.get("trialProof"),
+          label: "Trial proof",
+          required: true,
+        },
+        {
+          value: formData.get("paymentProof"),
+          label: "Payment proof",
+          required: true,
+        },
+        {
+          value: formData.get("extraEvidence"),
+          label: "Extra evidence",
+          required: false,
+        },
+      ]);
+
       const response = await fetch("/api/submit-spite-event", {
         method: "POST",
         body: formData,
@@ -47,11 +162,11 @@ export function SpiteEventForm() {
 
   return (
     <form
-  onSubmit={handleSubmit}
-  method="post"
-  action="/api/submit-spite-event"
-  encType="multipart/form-data"
->
+      onSubmit={handleSubmit}
+      method="post"
+      action="/api/submit-spite-event"
+      encType="multipart/form-data"
+    >
       <section className="formSection">
         <h2>1. The app that charged you</h2>
 
@@ -232,9 +347,19 @@ export function SpiteEventForm() {
           identity documents, or any sensitive banking data.
         </p>
 
+        <p className="help">
+          Accepted evidence formats: JPG, PNG, WEBP, or PDF. Maximum 5MB per file,
+          15MB total.
+        </p>
+
         <div className="field">
           <label>Upload trial proof *</label>
-          <input name="trialProof" type="file" required accept="image/*,.pdf" />
+          <input
+            name="trialProof"
+            type="file"
+            required
+            accept={EVIDENCE_ACCEPT}
+          />
         </div>
 
         <div className="field">
@@ -243,13 +368,17 @@ export function SpiteEventForm() {
             name="paymentProof"
             type="file"
             required
-            accept="image/*,.pdf"
+            accept={EVIDENCE_ACCEPT}
           />
         </div>
 
         <div className="field">
           <label>Other evidence, optional</label>
-          <input name="extraEvidence" type="file" accept="image/*,.pdf" />
+          <input
+            name="extraEvidence"
+            type="file"
+            accept={EVIDENCE_ACCEPT}
+          />
         </div>
       </section>
 
