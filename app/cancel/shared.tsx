@@ -39,7 +39,21 @@ export function CancelFooter() {
   );
 }
 
-export function BountyCta({ merchantName }: { merchantName?: string }) {
+type BountyCtaProps = {
+  merchantName?: string;
+  merchantDomain?: string;
+  merchantCategory?: string;
+};
+
+export function BountyCta({ merchantName, merchantDomain, merchantCategory }: BountyCtaProps) {
+  // CTA precompletat: parametrii ajung in formularul de pe homepage,
+  // care ii citeste si completeaza merchant/url/categorie automat.
+  const href = merchantName
+    ? `/?merchant=${encodeURIComponent(merchantName)}` +
+      (merchantDomain ? `&murl=${encodeURIComponent(`https://${merchantDomain}`)}` : "") +
+      (merchantCategory ? `&vertical=${encodeURIComponent(merchantCategory)}` : "") +
+      "#form"
+    : "/#form";
   return (
     <div className="sc-cta-box">
       <p className="sc-cta-kicker">CHARGED WITHOUT A CLEAR WARNING?</p>
@@ -55,7 +69,9 @@ export function BountyCta({ merchantName }: { merchantName?: string }) {
         becomes part of an anonymized early-warning radar for hard-to-cancel
         subscriptions.
       </p>
-      <a className="sc-btn" href="/#form">Submit my case — €3 bounty</a>
+      <a className="sc-btn" href={href}>
+        {merchantName ? `Submit my ${merchantName} case — €3 bounty` : "Submit my case — €3 bounty"}
+      </a>
     </div>
   );
 }

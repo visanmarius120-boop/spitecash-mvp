@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const EVIDENCE_ACCEPT =
   ".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf";
@@ -104,6 +104,21 @@ export function SpiteEventForm() {
   const [resultMessage, setResultMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Prefill din ghidurile /cancel/[slug]: ?merchant=..&murl=..&vertical=..#form
+  const [merchantName, setMerchantName] = useState("");
+  const [merchantUrl, setMerchantUrl] = useState("");
+  const [vertical, setVertical] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const m = params.get("merchant");
+    const u = params.get("murl");
+    const v = params.get("vertical");
+    if (m) setMerchantName(m);
+    if (u) setMerchantUrl(u);
+    if (v) setVertical(v);
+  }, []);
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -149,6 +164,9 @@ export function SpiteEventForm() {
       );
 
       form.reset();
+      setMerchantName("");
+      setMerchantUrl("");
+      setVertical("");
     } catch (error) {
       setErrorMessage(
         error instanceof Error
@@ -172,7 +190,13 @@ export function SpiteEventForm() {
 
         <div className="field">
           <label>App / merchant name *</label>
-          <input name="merchantName" required placeholder="Example: Example AI" />
+          <input
+            name="merchantName"
+            required
+            placeholder="Example: Example AI"
+            value={merchantName}
+            onChange={(e) => setMerchantName(e.target.value)}
+          />
         </div>
 
         <div className="field">
@@ -182,12 +206,14 @@ export function SpiteEventForm() {
             type="url"
             required
             placeholder="https://example.com"
+            value={merchantUrl}
+            onChange={(e) => setMerchantUrl(e.target.value)}
           />
         </div>
 
         <div className="field">
           <label>Category *</label>
-          <select name="vertical" required defaultValue="">
+          <select name="vertical" required value={vertical} onChange={(e) => setVertical(e.target.value)}>
             <option value="" disabled>
               Choose category
             </option>

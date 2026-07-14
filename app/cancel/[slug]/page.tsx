@@ -30,20 +30,28 @@ export async function generateMetadata(
 // ── Live friction stats from Supabase (best-effort, never blocks render) ──
 type Stats = { cases: number; avgDifficulty: number | null } | null;
 
+// Statistici publice DOAR din cazuri validate, cu prag minim de esantion.
+// Matching strict: domeniul merchantului sau numele COMPLET (nu primul cuvant,
+// ca sa nu amestecam "Google One" cu orice merchant care incepe cu "Google").
+const MIN_PUBLIC_CASES = 5;
+// Ajusteaza la statusurile exacte din schema ta de review:
+const VALIDATED_STATUSES = ["validated_medium", "validated_high"];
+
 async function getStats(m: Merchant): Promise<Stats> {
   try {
     const { supabaseAdmin } = await import("@/lib/supabaseAdmin");
     const { data: merchants } = await supabaseAdmin
       .from("merchants")
       .select("id")
-      .or(`name.ilike.%${m.name.split(" ")[0]}%,url.ilike.%${m.domain}%`);
+      .or(`url.ilike.%${m.domain}%,name.ilike.${m.name}`);
     if (!merchants || merchants.length === 0) return null;
     const ids = merchants.map((x: { id: string }) => x.id);
     const { data: events } = await supabaseAdmin
       .from("spite_events")
       .select("cancel_difficulty")
-      .in("merchant_id", ids);
-    if (!events || events.length === 0) return null;
+      .in("merchant_id", ids)
+      .in("status", VALIDATED_STATUSES);
+    if (!events || events.length < MIN_PUBLIC_CASES) return null;
     const diffs = events
       .map((e: { cancel_difficulty: number | null }) => e.cancel_difficulty)
       .filter((d: number | null): d is number => typeof d === "number");
@@ -131,7 +139,7 @@ export default async function CancelGuidePage(
         {stats && stats.cases > 0 ? (
           <div className="sc-stats">
             <div>
-              <b>Cases reported to SpiteCash</b>
+              <b>Validated cases at SpiteCash</b>
               <span className="sc-num">{stats.cases}</span>
             </div>
             {stats.avgDifficulty !== null ? (
@@ -194,7 +202,7 @@ export default async function CancelGuidePage(
           never authorized.
         </p>
 
-        <BountyCta merchantName={m.name} />
+        <BountyCta merchantName={m.name} merchantDomain={m.domain} merchantCategory={m.category} />
       </main>
       <CancelFooter />
     </div>

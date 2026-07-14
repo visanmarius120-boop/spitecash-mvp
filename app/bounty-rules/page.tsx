@@ -77,8 +77,9 @@ export default function BountyRulesPage() {
           <div className="sc-promise-head">The promise</div>
           <div className="sc-promise-body">
             If your case meets all six criteria below, we pay you <strong>€3</strong> —
-            every time, no discretion, no &quot;may receive&quot;. If it does not qualify, we tell
-            you which criterion failed and you can fix it and resubmit once.
+            no &quot;may receive&quot;, no moving goalposts: the six published criteria are the
+            whole test. If it does not qualify, we tell you which criterion failed and you
+            can fix it and resubmit once.
           </div>
         </div>
 
