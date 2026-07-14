@@ -6,7 +6,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CATALOG, getMerchant, CATEGORY_LABELS, type Merchant } from "@/lib/cancel-catalog";
-import { BountyCta, CancelFooter, CancelHeader, CANCEL_CSS } from "../shared";
+import { BountyCta, CancelFooter, CancelHeader, ExitReceiptCta, CANCEL_CSS } from "../shared";
 
 export const revalidate = 3600;
 
@@ -201,6 +201,8 @@ export default async function CancelGuidePage(
           you agreed to, and your bank&apos;s dispute process for charges you
           never authorized.
         </p>
+
+        <ExitReceiptCta merchantName={m.name} merchantDomain={m.domain} />
 
         <BountyCta merchantName={m.name} merchantDomain={m.domain} merchantCategory={m.category} />
       </main>

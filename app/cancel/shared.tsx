@@ -39,6 +39,25 @@ export function CancelFooter() {
   );
 }
 
+export function ExitReceiptCta({ merchantName, merchantDomain }: { merchantName?: string; merchantDomain?: string }) {
+  const href = merchantName
+    ? `/exit-receipt?merchant=${encodeURIComponent(merchantName)}` +
+      (merchantDomain ? `&murl=${encodeURIComponent(`https://${merchantDomain}`)}` : "")
+    : "/exit-receipt";
+  return (
+    <div className="sc-cta-box" style={{ background: "#fdfcf9" }}>
+      <p className="sc-cta-kicker">JUST CANCELLED{merchantName ? ` ${merchantName.toUpperCase()}` : ""}?</p>
+      <h2>Get your free Exit Receipt.</h2>
+      <p className="sc-cta-body">
+        A timestamped record that you cancelled — and after your next billing
+        date we check whether it <em>really</em> worked. If you get charged
+        again anyway, the €3 bounty applies. 60 seconds, free.
+      </p>
+      <a className="sc-btn" href={href}>Create my free Exit Receipt</a>
+    </div>
+  );
+}
+
 type BountyCtaProps = {
   merchantName?: string;
   merchantDomain?: string;
