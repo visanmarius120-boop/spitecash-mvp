@@ -20,9 +20,15 @@ export default function TermsPage() {
 
       <h2>3. Bounties</h2>
       <p>
-        Valid submissions may receive a micro-bounty of up to €3. A bounty is a reward
-        for participating in a consumer-friction research study. It is not payment for
-        a legal claim, debt, refund right, or personal data sale.
+        A submission that meets all criteria published on the{" "}
+        <a href="/bounty-rules">Bounty Rules page</a> and was submitted while the
+        monthly bounty pool was open receives a bounty of €3, paid within 7 days of
+        approval. The Bounty Rules page is the authoritative list of qualification
+        criteria, the monthly pool size, payment methods, and resubmission rules.
+        Whether a submission meets the criteria is determined by our review of the
+        evidence provided. A bounty is a reward for participating in a
+        consumer-friction research study. It is not payment for a legal claim, debt,
+        refund right, or personal data sale.
       </p>
 
       <h2>4. Submission rules</h2>
@@ -37,7 +43,9 @@ export default function TermsPage() {
       <h2>5. Review and rejection</h2>
       <p>
         We may reject submissions that are incomplete, unverifiable, unsafe, duplicated,
-        outside our accepted categories, or likely to contain sensitive data.
+        outside our accepted categories, or likely to contain sensitive data. If a
+        submission is rejected, we tell you which criterion it failed, and you may
+        correct and resubmit it once.
       </p>
 
       <h2>6. Research use</h2>
@@ -55,12 +63,12 @@ export default function TermsPage() {
 
       <h2>8. Changes</h2>
       <p>
-        We may update these terms as the MVP evolves. Continued use of the service means
-        you accept the updated terms.
+        We may update these terms as the service evolves. Continued use of the service
+        means you accept the updated terms.
       </p>
 
       <p className="legalNote">
-        These MVP terms should be reviewed before public launch.
+        Questions about these terms: hello@spitecash.com
       </p>
     </main>
   );

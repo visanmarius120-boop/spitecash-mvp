@@ -3,6 +3,12 @@ export default function HowItWorksPage() {
     <main className="legalPage">
       <h1>How SpiteCash Works</h1>
 
+      <p>
+        Need to cancel a subscription first? Start with our free{" "}
+        <a href="/cancel">step-by-step cancellation guides</a> — then come back
+        here if you were charged after a trial.
+      </p>
+
       <h2>1. You submit a case</h2>
       <p>
         Tell us which app charged you, how much you were charged, when it happened,
@@ -29,11 +35,15 @@ export default function HowItWorksPage() {
         This helps reduce fraud and prevents unsafe evidence from being used.
       </p>
 
-      <h2>5. Valid cases may receive up to €3</h2>
+      <h2>5. Valid cases get €3 — guaranteed</h2>
       <p>
-        If your event is valid, clear, recent, and relevant, it may qualify for a
-        micro-bounty. The bounty is not a refund and does not transfer any legal claim
-        to us.
+        If your case meets all{" "}
+        <a href="/bounty-rules">six published criteria</a> and was submitted while
+        the monthly bounty pool was open, you get €3 — paid within 7 days of
+        approval, and published on the{" "}
+        <a href="/payouts">public wall of payouts</a>. The bounty is a reward for
+        participating in consumer-friction research. It is not a refund and does
+        not transfer any legal claim to us.
       </p>
 
       <h2>6. Aggregated data becomes Friction Alpha</h2>
