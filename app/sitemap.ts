@@ -4,6 +4,7 @@
 
 import type { MetadataRoute } from "next";
 import { CATALOG } from "@/lib/cancel-catalog";
+import { DESCRIPTORS } from "@/lib/descriptor-catalog";
 
 const BASE = "https://spitecash.com";
 
@@ -18,9 +19,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/how-it-works`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/exit-receipt`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/charge`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${BASE}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
+
+  const descriptors: MetadataRoute.Sitemap = DESCRIPTORS.map((d) => ({
+    url: `${BASE}/charge/${d.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
 
   const guides: MetadataRoute.Sitemap = CATALOG.map((m) => ({
     url: `${BASE}/cancel/${m.slug}`,
@@ -29,5 +38,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...core, ...guides];
+  return [...core, ...guides, ...descriptors];
 }

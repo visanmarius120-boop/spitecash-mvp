@@ -89,6 +89,9 @@ export default function HomePage() {
       </section>
 
       <footer className="footer">
+        <a href="/cancel">Cancellation guides</a>
+        <a href="/charge">What is this charge?</a>
+        <a href="/exit-receipt">Exit Receipt</a>
         <a href="/how-it-works">How it works</a>
         <a href="/bounty-rules">Bounty rules</a>
         <a href="/payouts">Payouts</a>
