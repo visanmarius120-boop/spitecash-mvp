@@ -29,8 +29,8 @@ const CRITERIA = [
     w: "The name on the charge must correspond to the app you named, and the charge date must fall after the trial start. Mismatches are the #1 rejection reason.",
   },
   {
-    t: "Sensitive data is hidden before upload.",
-    w: "Full card numbers, IBANs, passwords, ID documents — blur or crop them. We do not want them, and a submission containing them is rejected for your own protection.",
+    t: "Sensitive data is hidden before upload — blurring and cropping are fine.",
+    w: "Full card numbers, IBANs, passwords, ID documents — blur or crop them before uploading. Redacting sensitive data from your own documents is not the same as editing evidence: a screenshot with a blurred card number is legitimate and encouraged. What disqualifies a submission is fabricating or altering the charge details themselves.",
   },
   {
     t: "It is your first paid case for this merchant.",
@@ -39,7 +39,7 @@ const CRITERIA = [
 ];
 
 const DISQUALIFIERS = [
-  "Fabricated or edited screenshots — checked, and one fake permanently closes your email",
+  "Fabricated screenshots or edited charge details — checked. Blurring or cropping sensitive personal data is not fabrication; it is encouraged.",
   "Charges you actually consented to knowingly and just regret",
   "Cases about other people's accounts or payments",
   "Duplicate submissions of the same charge, including from different emails",

@@ -7,7 +7,7 @@ import { ExitReceiptForm } from "@/components/ExitReceiptForm";
 export const metadata: Metadata = {
   title: "Exit Receipt — timestamped proof you cancelled | SpiteCash",
   description:
-    "Free: create a timestamped record of your subscription cancellation. We check back after your next billing date to record whether it really worked — and if you get charged again, the €3 bounty applies.",
+    "Free: create a timestamped record of your subscription cancellation. We check back after your next billing date to record whether it really worked — and if you get charged again, the submission may qualify for the €3 bounty.",
   alternates: { canonical: "https://spitecash.com/exit-receipt" },
 };
 
@@ -40,7 +40,7 @@ export default function ExitReceiptPage() {
           <div><b>1</b>Cancel your subscription (our <a href="/cancel">guides</a> show the exact route).</div>
           <div><b>2</b>Create your free Exit Receipt below — 60 seconds.</div>
           <div><b>3</b>After your next billing date, we ask: did it really stop?</div>
-          <div><b>4</b>Charged again anyway? That is a verified case — the <a href="/bounty-rules">€3 bounty</a> applies.</div>
+          <div><b>4</b>Charged again anyway? Submit it — a post-cancellation charge that meets the <a href="/bounty-rules">six published criteria</a> may qualify for the €3 bounty.</div>
         </div>
 
         <div className="er-formshell">

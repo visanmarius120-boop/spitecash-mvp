@@ -21,6 +21,8 @@ export default function PrivacyPage() {
         <li>Charge amount, currency, and charge date.</li>
         <li>Information about reminders, cancellation, refunds, and switching intent.</li>
         <li>Files you upload as evidence, such as screenshots or PDFs.</li>
+        <li>Exit Receipt data: merchant name, subscription route (web/App Store/Google Play), cancellation date, and next billing date — if you create a free Exit Receipt.</li>
+        <li>SHA-256 fingerprint of any cancellation confirmation screenshot you upload with an Exit Receipt (the fingerprint is stored; the file is deleted after 90 days).</li>
       </ul>
 
       <h2>3. What not to upload</h2>
@@ -36,6 +38,7 @@ export default function PrivacyPage() {
         <li>Review and validate consumer-friction events.</li>
         <li>Calculate a preliminary SpiteScore.</li>
         <li>Contact you about your submission or bounty eligibility.</li>
+        <li>Send a follow-up after your next billing date if you created an Exit Receipt with a billing date, to record whether the cancellation worked.</li>
         <li>Create anonymized and aggregated research reports.</li>
         <li>Improve our fraud prevention and evidence review workflow.</li>
       </ul>
@@ -55,11 +58,14 @@ export default function PrivacyPage() {
       </p>
 
       <h2>7. Data retention</h2>
-      <p>
-        We keep submitted data only as long as needed for validation, fraud prevention,
-        bounty records, and aggregated research. Test submissions and rejected files may
-        be deleted earlier.
-      </p>
+      <p>We keep data for the following periods:</p>
+      <ul>
+        <li><strong>Evidence files (screenshots, PDFs):</strong> deleted 90 days after the case decision.</li>
+        <li><strong>Exit Receipt confirmation screenshots:</strong> deleted 90 days after the receipt is closed or outcome recorded.</li>
+        <li><strong>Your email address:</strong> kept until you ask us to delete it, or after 2 years of inactivity.</li>
+        <li><strong>Case facts (merchant, amount, date, difficulty):</strong> kept indefinitely in anonymized, aggregated form.</li>
+        <li><strong>Exit Receipt outcome data (cancelled/charged again):</strong> kept indefinitely in anonymized form to power per-merchant cancellation statistics.</li>
+      </ul>
 
       <h2>8. Your rights</h2>
       <p>
