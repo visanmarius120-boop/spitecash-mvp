@@ -4,7 +4,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "SpiteCash — Submit your case",
   description:
-    "Submit proof of a post-trial subscription charge. Valid events may receive up to €3.",
+    "Cancel any subscription with our free step-by-step guides. Submit proof if you were charged after a free trial — valid cases get €3 guaranteed.",
+  verification: {
+    other: {
+      "impact-site-verification": "a6694be4-189f-4c07-8bc3-3a47a02a69aa",
+    },
+  },
 };
 
 export default function RootLayout({
