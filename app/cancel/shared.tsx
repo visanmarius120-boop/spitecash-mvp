@@ -39,11 +39,11 @@ export function CancelFooter() {
   );
 }
 
-export function ExitReceiptCta({ merchantName, merchantDomain }: { merchantName?: string; merchantDomain?: string }) {
-  const href = merchantName
+export function ExitReceiptCta({ merchantName, merchantDomain, overrideHref }: { merchantName?: string; merchantDomain?: string; overrideHref?: string }) {
+  const href = overrideHref ?? (merchantName
     ? `/exit-receipt?merchant=${encodeURIComponent(merchantName)}` +
       (merchantDomain ? `&murl=${encodeURIComponent(`https://${merchantDomain}`)}` : "")
-    : "/exit-receipt";
+    : "/exit-receipt");
   return (
     <div className="sc-cta-box" style={{ background: "#fdfcf9" }}>
       <p className="sc-cta-kicker">JUST CANCELLED{merchantName ? ` ${merchantName.toUpperCase()}` : ""}?</p>

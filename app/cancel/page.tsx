@@ -12,11 +12,34 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://spitecash.com/cancel" },
 };
 
+const HUB_CSS = `
+.sc-hub-intro {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 20px 22px;
+  margin: 24px 0 32px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #374151;
+}
+.sc-hub-intro h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+.sc-hub-intro p { margin-bottom: 8px; }
+.sc-hub-intro p:last-child { margin-bottom: 0; }
+.sc-hub-intro strong { color: var(--ink); }
+`;
+
 export default function CancelHubPage() {
   const groups = byCategory();
   return (
     <div className="sc-page">
       <style>{CANCEL_CSS}</style>
+      <style>{HUB_CSS}</style>
       <CancelHeader />
       <main className="sc-wrap">
         <h1>How to cancel any subscription</h1>
@@ -34,6 +57,30 @@ export default function CancelHubPage() {
           service&apos;s own name means you subscribed on their website. You can
           only cancel where you subscribed — the app&apos;s website cannot cancel
           an App Store subscription, and vice versa.
+        </div>
+
+        {/* SEO intro — indexable text for "how to cancel a subscription" long-tail */}
+        <div className="sc-hub-intro">
+          <h2>Why canceling a subscription is harder than it should be</h2>
+          <p>
+            Most subscription services make cancellation deliberately confusing: the
+            cancel button is buried three menus deep, dark patterns add &quot;pause&quot;
+            screens before the real confirmation, and the biggest trap — canceling in
+            the wrong place does absolutely nothing.
+          </p>
+          <p>
+            <strong>The most common mistake:</strong> you subscribed through the App
+            Store or Google Play, but you tried to cancel on the company&apos;s website.
+            The website has no access to your App Store billing — your subscription keeps
+            running and you keep getting charged. Every guide below shows you exactly
+            which path matches how you originally signed up.
+          </p>
+          <p>
+            If you followed the correct steps and got charged again anyway, that is what
+            the <a href="/bounty-rules">€3 bounty</a> is for — and the{" "}
+            <a href="/exit-receipt">Exit Receipt</a> timestamps your cancellation so you
+            have proof if you need it.
+          </p>
         </div>
 
         {groups.map((g) => (

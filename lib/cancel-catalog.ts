@@ -25,6 +25,13 @@ export type Merchant = {
   platformNote?: string;   // expanded web-vs-iOS-vs-Android explanation
   removePaymentNote?: string; // how to remove saved card after canceling
   faq?: FaqItem[];         // GSC-driven FAQ items
+  affiliateSource?: string;  // UTM source tag for Exit Receipt CTA tracking
+  crossSell?: {            // cross-sell block — VPN alternatives with affiliate slot
+    heading: string;
+    body: string;
+    cta: string;
+    ctaHref: string;       // placeholder "#affiliate" until link arrives
+  };
 };
 
 export const CATEGORY_LABELS: Record<Merchant["category"], string> = {
@@ -38,14 +45,66 @@ export const CATEGORY_LABELS: Record<Merchant["category"], string> = {
 
 export const CATALOG: Merchant[] = [
   // ── VPN ────────────────────────────────────────────────────────────────
-  { slug: "nordvpn", name: "NordVPN", category: "vpn", domain: "nordvpn.com", channels: ["web", "ios", "android"] },
-  { slug: "expressvpn", name: "ExpressVPN", category: "vpn", domain: "expressvpn.com", channels: ["web", "ios", "android"] },
-  { slug: "surfshark", name: "Surfshark", category: "vpn", domain: "surfshark.com", channels: ["web", "ios", "android"] },
-  { slug: "cyberghost-vpn", name: "CyberGhost VPN", category: "vpn", domain: "cyberghostvpn.com", channels: ["web", "ios", "android"] },
+  { slug: "nordvpn", name: "NordVPN", category: "vpn", domain: "nordvpn.com", channels: ["web", "ios", "android"], affiliateSource: "cancel-nordvpn" },
+  {
+    slug: "expressvpn",
+    name: "ExpressVPN",
+    category: "vpn",
+    domain: "expressvpn.com",
+    channels: ["web", "ios", "android"],
+    affiliateSource: "cancel-expressvpn",
+    crossSell: {
+      heading: "Looking for a better-value VPN?",
+      body: "If you cancelled ExpressVPN because of price, NordVPN and Surfshark offer comparable speeds at significantly lower renewal rates — and both have a 30-day money-back guarantee.",
+      cta: "Compare NordVPN plans →",
+      ctaHref: "#affiliate-nordvpn",
+    },
+  },
+  { slug: "surfshark", name: "Surfshark", category: "vpn", domain: "surfshark.com", channels: ["web", "ios", "android"], affiliateSource: "cancel-surfshark" },
+  {
+    slug: "cyberghost-vpn",
+    name: "CyberGhost VPN",
+    category: "vpn",
+    domain: "cyberghostvpn.com",
+    channels: ["web", "ios", "android"],
+    affiliateSource: "cancel-cyberghost",
+    crossSell: {
+      heading: "Switching VPN providers?",
+      body: "NordVPN and Surfshark are consistently rated above CyberGhost for speed and reliability, at similar or lower price points. Both offer a 30-day money-back guarantee — no risk to try.",
+      cta: "See NordVPN plans →",
+      ctaHref: "#affiliate-nordvpn",
+    },
+  },
   { slug: "ipvanish", name: "IPVanish", category: "vpn", domain: "ipvanish.com", channels: ["web", "ios", "android"] },
   { slug: "proton-vpn", name: "Proton VPN", category: "vpn", domain: "protonvpn.com", channels: ["web", "ios", "android"] },
-  { slug: "private-internet-access", name: "Private Internet Access", category: "vpn", domain: "privateinternetaccess.com", channels: ["web", "ios", "android"] },
-  { slug: "tunnelbear", name: "TunnelBear", category: "vpn", domain: "tunnelbear.com", channels: ["web", "ios", "android"] },
+  {
+    slug: "private-internet-access",
+    name: "Private Internet Access",
+    category: "vpn",
+    domain: "privateinternetaccess.com",
+    channels: ["web", "ios", "android"],
+    affiliateSource: "cancel-pia",
+    crossSell: {
+      heading: "Switching from PIA?",
+      body: "NordVPN and Surfshark are the two most-switched-to alternatives from PIA — both offer a stronger server network, consistent speeds, and a 30-day money-back guarantee.",
+      cta: "Compare NordVPN plans →",
+      ctaHref: "#affiliate-nordvpn",
+    },
+  },
+  {
+    slug: "tunnelbear",
+    name: "TunnelBear",
+    category: "vpn",
+    domain: "tunnelbear.com",
+    channels: ["web", "ios", "android"],
+    affiliateSource: "cancel-tunnelbear",
+    crossSell: {
+      heading: "Need more server locations and speed?",
+      body: "TunnelBear has a smaller network than most competitors. If you are upgrading, NordVPN (6,000+ servers) and Surfshark (unlimited devices) are the two most popular alternatives at reasonable prices.",
+      cta: "See Surfshark plans →",
+      ctaHref: "#affiliate-surfshark",
+    },
+  },
 
   // ── AI tools ───────────────────────────────────────────────────────────
   { slug: "chatgpt-plus", name: "ChatGPT Plus", category: "ai_tool", domain: "chatgpt.com", channels: ["web", "ios", "android"] },
@@ -185,6 +244,7 @@ export const CATALOG: Merchant[] = [
     category: "cloud_storage",
     domain: "mega.io",
     channels: ["web", "ios", "android"],
+    affiliateSource: "cancel-mega",
     gotcha: "MEGA Pro plans do not auto-renew by default \u2014 but if you enabled auto-renewal, you must cancel it explicitly. Go to mega.io \u2192 click your avatar (top right) \u2192 My account \u2192 Plan \u2192 Cancel subscription. On mobile, MEGA subscriptions are managed through the MEGA app\u2019s account settings, not through App Store or Google Play \u2014 even if you paid via those stores, check the MEGA app first.",
     platformNote: "MEGA subscription management is unusual: even if you paid via the App Store or Google Play, the primary place to cancel is inside the MEGA app itself (Account \u2192 Upgrade \u2192 Cancel), not the iOS or Android subscription settings. On the web: mega.io \u2192 click your avatar (top right) \u2192 My account \u2192 Plan \u2192 Cancel subscription. If you subscribed via Apple In-App Purchase: open the MEGA app \u2192 Account \u2192 Upgrade \u2192 Cancel, or as a fallback try iOS Settings \u2192 Apple ID \u2192 Subscriptions \u2192 MEGA. If you subscribed via Google Play In-App Purchase: open the MEGA app \u2192 Account \u2192 Upgrade \u2192 Cancel, or as a fallback try Google Play \u2192 Subscriptions \u2192 MEGA.",
     faq: [

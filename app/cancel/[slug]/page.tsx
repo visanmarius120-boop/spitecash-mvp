@@ -98,7 +98,7 @@ const CHANNEL_META: Record<string, { tag: string; title: string }> = {
   android: { tag: "ANDROID", title: "If you subscribed through Google Play" },
 };
 
-// ── Additional CSS for enriched sections ───────────────────────────────────
+// ── Additional CSS for enriched sections + cross-sell ─────────────────────
 const ENRICHED_CSS = `
 .sc-platform-note {
   background: var(--green-bg);
@@ -177,6 +177,44 @@ const ENRICHED_CSS = `
   padding: 0 0 16px 0;
   margin: 0;
 }
+.sc-cross-sell {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 18px 20px;
+  margin: 32px 0;
+  background: #fdfcf9;
+}
+.sc-cross-sell-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+}
+.sc-cross-sell h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+}
+.sc-cross-sell p {
+  font-size: 14.5px;
+  color: #4b5563;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.sc-cross-sell a {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.sc-cross-sell a:hover { color: #095f36; }
 `;
 
 export default async function CancelGuidePage(
@@ -201,6 +239,7 @@ export default async function CancelGuidePage(
   };
 
   const hasFaq = !!(m.faq && m.faq.length > 0);
+  const hasEnriched = hasFaq || !!m.platformNote || !!m.removePaymentNote || !!m.crossSell;
 
   // FAQ schema — only rendered when faq entries exist
   const faqLd = hasFaq ? {
@@ -216,10 +255,15 @@ export default async function CancelGuidePage(
     })),
   } : null;
 
+  // Exit Receipt CTA href — adds source param when affiliateSource is set
+  const exitReceiptHref = m.affiliateSource
+    ? `/exit-receipt?merchant=${encodeURIComponent(m.name)}&murl=${encodeURIComponent(`https://${m.domain}`)}&source=${m.affiliateSource}`
+    : undefined;
+
   return (
     <div className="sc-page">
       <style>{CANCEL_CSS}</style>
-      {hasFaq && <style>{ENRICHED_CSS}</style>}
+      {hasEnriched && <style>{ENRICHED_CSS}</style>}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -323,7 +367,24 @@ export default async function CancelGuidePage(
           never authorized.
         </p>
 
-        <ExitReceiptCta merchantName={m.name} merchantDomain={m.domain} />
+        {/* Cross-sell block — VPN alternatives, shown before CTAs */}
+        {m.crossSell ? (
+          <section className="sc-cross-sell">
+            <span className="sc-cross-sell-kicker">Switching provider?</span>
+            <h2>{m.crossSell.heading}</h2>
+            <p>{m.crossSell.body}</p>
+            <a href={m.crossSell.ctaHref} rel="nofollow sponsored">
+              {m.crossSell.cta}
+            </a>
+          </section>
+        ) : null}
+
+        {/* Exit Receipt CTA — with source tracking when affiliateSource is set */}
+        <ExitReceiptCta
+          merchantName={m.name}
+          merchantDomain={m.domain}
+          {...(exitReceiptHref ? { overrideHref: exitReceiptHref } : {})}
+        />
 
         <BountyCta merchantName={m.name} merchantDomain={m.domain} merchantCategory={m.category} />
 
