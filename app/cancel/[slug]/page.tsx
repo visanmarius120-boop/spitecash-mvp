@@ -5,7 +5,7 @@
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CATALOG, getMerchant, CATEGORY_LABELS, type Merchant } from "@/lib/cancel-catalog";
+import { CATALOG, getMerchant, CATEGORY_LABELS, type Merchant, type FaqItem } from "@/lib/cancel-catalog";
 import { BountyCta, CancelFooter, CancelHeader, ExitReceiptCta, CANCEL_CSS } from "../shared";
 
 export const revalidate = 3600;
@@ -20,9 +20,14 @@ export async function generateMetadata(
   const { slug } = await params;
   const m = getMerchant(slug);
   if (!m) return { title: "Guide not found — SpiteCash" };
+  const enriched = !!(m.faq && m.faq.length > 0);
   return {
-    title: `How to Cancel ${m.name} (2026 Guide) — SpiteCash`,
-    description: `Cancel your ${m.name} subscription step by step — on the web, iPhone, or Android. Plus what to do about refunds, and €3 if you were charged after a free trial.`,
+    title: enriched
+      ? `How to Cancel ${m.name}: Free Trial, Auto-Renewal & Platform Guide (2026) — SpiteCash`
+      : `How to Cancel ${m.name} (2026 Guide) — SpiteCash`,
+    description: enriched
+      ? `Cancel ${m.name} on web, iPhone, or Android. Stop auto-renewal, cancel after the free trial, remove your payment method. Plus €3 bounty if you were charged unexpectedly.`
+      : `Cancel your ${m.name} subscription step by step — on the web, iPhone, or Android. Plus what to do about refunds, and €3 if you were charged after a free trial.`,
     alternates: { canonical: `https://spitecash.com/cancel/${slug}` },
   };
 }
@@ -30,11 +35,7 @@ export async function generateMetadata(
 // ── Live friction stats from Supabase (best-effort, never blocks render) ──
 type Stats = { cases: number; avgDifficulty: number | null } | null;
 
-// Statistici publice DOAR din cazuri validate, cu prag minim de esantion.
-// Matching strict: domeniul merchantului sau numele COMPLET (nu primul cuvant,
-// ca sa nu amestecam "Google One" cu orice merchant care incepe cu "Google").
 const MIN_PUBLIC_CASES = 5;
-// Ajusteaza la statusurile exacte din schema ta de review:
 const VALIDATED_STATUSES = ["validated_medium", "validated_high"];
 
 async function getStats(m: Merchant): Promise<Stats> {
@@ -65,7 +66,7 @@ async function getStats(m: Merchant): Promise<Stats> {
   }
 }
 
-// ── Steps per channel (accurate generic flows) ────────────────────────────
+// ── Steps per channel ──────────────────────────────────────────────────────
 function webSteps(m: Merchant): string[] {
   return [
     `Log in to your account on ${m.domain} in a browser (not the mobile app).`,
@@ -97,6 +98,87 @@ const CHANNEL_META: Record<string, { tag: string; title: string }> = {
   android: { tag: "ANDROID", title: "If you subscribed through Google Play" },
 };
 
+// ── Additional CSS for enriched sections ───────────────────────────────────
+const ENRICHED_CSS = `
+.sc-platform-note {
+  background: var(--green-bg);
+  border-left: 4px solid var(--green);
+  padding: 16px 18px;
+  margin: 24px 0;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.sc-platform-note h2 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.sc-remove-payment {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ink);
+  padding: 16px 18px;
+  margin: 24px 0;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.sc-remove-payment h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+}
+.sc-faq {
+  margin: 32px 0;
+}
+.sc-faq > h2 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: block;
+}
+.sc-faq-item {
+  border-bottom: 1px solid var(--line);
+}
+.sc-faq-item summary {
+  font-weight: 700;
+  font-size: 15.5px;
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 32px 14px 0;
+  position: relative;
+  line-height: 1.4;
+}
+.sc-faq-item summary::-webkit-details-marker { display: none; }
+.sc-faq-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--green);
+  line-height: 1;
+}
+.sc-faq-item[open] summary::after { content: '\u2212'; }
+.sc-faq-item p {
+  font-size: 15px;
+  color: #374151;
+  line-height: 1.65;
+  padding: 0 0 16px 0;
+  margin: 0;
+}
+`;
+
 export default async function CancelGuidePage(
   { params }: { params: Promise<{ slug: string }> }
 ) {
@@ -118,13 +200,36 @@ export default async function CancelGuidePage(
     })),
   };
 
+  const hasFaq = !!(m.faq && m.faq.length > 0);
+
+  // FAQ schema — only rendered when faq entries exist
+  const faqLd = hasFaq ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: m.faq!.map((item: FaqItem) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  } : null;
+
   return (
     <div className="sc-page">
       <style>{CANCEL_CSS}</style>
+      {hasFaq && <style>{ENRICHED_CSS}</style>}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      )}
       <CancelHeader />
       <main className="sc-wrap">
         <nav className="sc-crumbs">
@@ -181,6 +286,22 @@ export default async function CancelGuidePage(
           </section>
         ))}
 
+        {/* Platform note — expanded web vs iOS vs Android explanation */}
+        {m.platformNote ? (
+          <section className="sc-platform-note">
+            <h2>Canceling {m.name}: web vs iPhone vs Android</h2>
+            <p>{m.platformNote}</p>
+          </section>
+        ) : null}
+
+        {/* Remove payment method — shown only when field is set */}
+        {m.removePaymentNote ? (
+          <section className="sc-remove-payment" id="remove-payment-method">
+            <h2>How to remove your payment method from {m.name}</h2>
+            <p>{m.removePaymentNote}</p>
+          </section>
+        ) : null}
+
         <span className="sc-kicker">Charged anyway? Refund options</span>
         <p className="sc-body">
           <strong>App Store:</strong> request a refund at{" "}
@@ -205,6 +326,20 @@ export default async function CancelGuidePage(
         <ExitReceiptCta merchantName={m.name} merchantDomain={m.domain} />
 
         <BountyCta merchantName={m.name} merchantDomain={m.domain} merchantCategory={m.category} />
+
+        {/* FAQ — rendered last, after CTAs, for GSC query coverage */}
+        {hasFaq ? (
+          <section className="sc-faq">
+            <h2>Frequently asked questions</h2>
+            {m.faq!.map((item: FaqItem) => (
+              <details key={item.q} className="sc-faq-item">
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+          </section>
+        ) : null}
+
       </main>
       <CancelFooter />
     </div>
