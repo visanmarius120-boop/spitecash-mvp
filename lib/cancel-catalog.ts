@@ -40,7 +40,11 @@ export const CATALOG: Merchant[] = [
   { slug: "chatgpt-plus", name: "ChatGPT Plus", category: "ai_tool", domain: "chatgpt.com", channels: ["web", "ios", "android"] },
   { slug: "claude-pro", name: "Claude Pro", category: "ai_tool", domain: "claude.ai", channels: ["web", "ios", "android"] },
   { slug: "midjourney", name: "Midjourney", category: "ai_tool", domain: "midjourney.com", channels: ["web"] },
-  { slug: "perplexity-pro", name: "Perplexity Pro", category: "ai_tool", domain: "perplexity.ai", channels: ["web", "ios", "android"] },
+  {
+    slug: "perplexity-pro", name: "Perplexity Pro", category: "ai_tool",
+    domain: "perplexity.ai", channels: ["web", "ios", "android"],
+    gotcha: "Perplexity auto-renews annually by default. If you subscribed on the web, cancel at perplexity.ai/settings — look for 'Subscription' under your profile. The cancel option is easy to miss: it appears only after clicking 'Manage subscription', which opens a Stripe billing portal. If you subscribed through the iOS app, cancel through Settings → Subscriptions, not on the website.",
+  },
   { slug: "gemini-advanced", name: "Gemini Advanced (Google One AI)", category: "ai_tool", domain: "one.google.com", channels: ["web", "android", "ios"] },
   { slug: "jasper-ai", name: "Jasper", category: "ai_tool", domain: "jasper.ai", channels: ["web"] },
   { slug: "copy-ai", name: "Copy.ai", category: "ai_tool", domain: "copy.ai", channels: ["web"] },
@@ -63,8 +67,16 @@ export const CATALOG: Merchant[] = [
   { slug: "capcut-pro", name: "CapCut Pro", category: "photo_video", domain: "capcut.com", channels: ["ios", "android", "web"] },
   { slug: "remini", name: "Remini", category: "photo_video", domain: "remini.ai", channels: ["ios", "android", "web"] },
   { slug: "photoroom", name: "PhotoRoom Pro", category: "photo_video", domain: "photoroom.com", channels: ["ios", "android", "web"] },
-  { slug: "fotor", name: "Fotor Pro", category: "photo_video", domain: "fotor.com", channels: ["web", "ios", "android"] },
-  { slug: "prequel", name: "Prequel", category: "photo_video", domain: "prequel.app", channels: ["ios", "android"] },
+  {
+    slug: "fotor", name: "Fotor Pro", category: "photo_video",
+    domain: "fotor.com", channels: ["web", "ios", "android"],
+    gotcha: "Fotor Pro subscriptions work differently depending on where you signed up. Web subscribers: cancel at fotor.com → Account → Subscription → Cancel Plan. App Store or Google Play subscribers: you must cancel through those stores — the Fotor website cannot cancel an App Store subscription, and vice versa. Check your original confirmation email to identify which platform you used.",
+  },
+  {
+    slug: "prequel", name: "Prequel", category: "photo_video",
+    domain: "prequel.app", channels: ["ios", "android"],
+    gotcha: "Prequel is available only on mobile — there is no desktop web subscription to cancel. The free trial converts to a paid subscription silently if you do not cancel at least 24 hours before the trial ends. To cancel: open the App Store (iPhone) or Google Play (Android), find Prequel in your active subscriptions, and cancel from there. Deleting the app does NOT cancel the subscription.",
+  },
 
   // ── Cloud storage ──────────────────────────────────────────────────────
   { slug: "dropbox", name: "Dropbox Plus", category: "cloud_storage", domain: "dropbox.com", channels: ["web", "ios", "android"] },
@@ -75,7 +87,11 @@ export const CATALOG: Merchant[] = [
     gotcha: "iCloud+ is managed only through your Apple account settings (iPhone, iPad, or Mac) \u2014 there is no cancellation page on the web outside Apple's subscription settings.",
   },
   { slug: "microsoft-365", name: "Microsoft 365", category: "cloud_storage", domain: "account.microsoft.com", channels: ["web", "ios", "android"] },
-  { slug: "mega", name: "MEGA", category: "cloud_storage", domain: "mega.io", channels: ["web", "ios", "android"] },
+  {
+    slug: "mega", name: "MEGA", category: "cloud_storage",
+    domain: "mega.io", channels: ["web", "ios", "android"],
+    gotcha: "MEGA Pro plans do not auto-renew by default — but if you enabled auto-renewal, you must cancel it explicitly. Go to mega.io → click your avatar (top right) → My account → Plan → Cancel subscription. On mobile, MEGA subscriptions are managed through the app, not through App Store or Google Play — even if you paid via those stores, check the MEGA app's account settings first.",
+  },
   { slug: "pcloud", name: "pCloud", category: "cloud_storage", domain: "pcloud.com", channels: ["web", "ios", "android"] },
   { slug: "box", name: "Box", category: "cloud_storage", domain: "box.com", channels: ["web", "ios", "android"] },
 
@@ -85,7 +101,11 @@ export const CATALOG: Merchant[] = [
   { slug: "busuu", name: "Busuu Premium", category: "language_learning", domain: "busuu.com", channels: ["web", "ios", "android"] },
   { slug: "rosetta-stone", name: "Rosetta Stone", category: "language_learning", domain: "rosettastone.com", channels: ["web", "ios", "android"] },
   { slug: "memrise", name: "Memrise Pro", category: "language_learning", domain: "memrise.com", channels: ["web", "ios", "android"] },
-  { slug: "pimsleur", name: "Pimsleur", category: "language_learning", domain: "pimsleur.com", channels: ["web", "ios", "android"] },
+  {
+    slug: "pimsleur", name: "Pimsleur", category: "language_learning",
+    domain: "pimsleur.com", channels: ["web", "ios", "android"],
+    gotcha: "Pimsleur offers a 7-day free trial that converts to a paid subscription automatically. To cancel on the web: log in at pimsleur.com → click your name → Account → Subscription → Cancel Subscription. You must cancel before the trial ends to avoid being charged. Pimsleur customer support (1-800-831-5497 or via the website chat) can also process cancellations if you have trouble finding the option.",
+  },
   { slug: "mondly", name: "Mondly Premium", category: "language_learning", domain: "mondly.com", channels: ["web", "ios", "android"] },
 
   // ── Other subscriptions ────────────────────────────────────────────────
