@@ -117,8 +117,8 @@ export const CATALOG: Merchant[] = [
     domain: "perplexity.ai",
     channels: ["web", "ios", "android"],
     gotcha: "Perplexity auto-renews annually by default. The cancel option appears only after clicking \u201CManage subscription\u201D inside Settings \u2014 which opens a Stripe billing portal. If you subscribed through the iOS App Store, cancel through iOS Settings \u2192 Subscriptions, not on the website.",
-    platformNote: "Where you cancel depends entirely on where you originally subscribed \u2014 and canceling in the wrong place does nothing. Web subscribers: cancel only at perplexity.ai \u2192 Settings \u2192 Subscription \u2192 Cancel Plan. The App Store and Google Play do not show a web subscription. iOS subscribers: cancel via iOS Settings \u2192 Apple ID \u2192 Subscriptions \u2192 Perplexity \u2192 Cancel Subscription. Canceling on the Perplexity website has no effect on an App Store subscription. Android subscribers: cancel via Google Play \u2192 Subscriptions \u2192 Perplexity \u2192 Cancel. The same rule applies \u2014 the Perplexity website cannot cancel a Play Store subscription. If you canceled in the wrong place and were charged again, that qualifies for a bounty case.",
-    removePaymentNote: "Perplexity does not allow removing a saved card while an active subscription is attached to it. Cancel your Pro subscription first (steps above), then go to Settings \u2192 Billing \u2192 Payment methods and click the three-dot menu next to your card to remove it. If the Remove option is greyed out, wait until the current billing period ends \u2014 Perplexity keeps the card on file until the cycle closes. If you are still charged after canceling and removing the card, open an Exit Receipt before disputing with your bank.",
+    platformNote: "Where you cancel depends entirely on where you originally subscribed \u2014 and canceling in the wrong place does nothing. Web subscribers: cancel only at perplexity.ai \u2192 Settings \u2192 Subscription \u2192 Cancel Plan. The App Store and Google Play do not show a web subscription. iOS subscribers: cancel via iOS Settings \u2192 Apple ID \u2192 Subscriptions \u2192 Perplexity \u2192 Cancel Subscription. Canceling on the Perplexity website has no effect on an App Store subscription. Android subscribers: cancel via Google Play \u2192 Subscriptions \u2192 Perplexity \u2192 Cancel. The same rule applies \u2014 the Perplexity website cannot cancel a Play Store subscription. If you canceled in the wrong place and were charged again, that charge can qualify for a bounty submission \u2014 \u20AC3 if it meets the six published criteria.",
+    removePaymentNote: "Perplexity does not allow removing a saved card while an active subscription is attached to it. Cancel your Pro subscription first (steps above), then go to Settings \u2192 Billing \u2192 Payment methods and click the three-dot menu next to your card to remove it. If the Remove option is greyed out, wait until the current billing period ends \u2014 Perplexity keeps the card on file until the cycle closes. A charge that arrives after you cancelled and removed the card can qualify for a bounty submission under the six published criteria \u2014 and if you created an Exit Receipt at the moment you cancelled, it pre-fills the submission for you.",
     faq: [
       {
         q: "How do I cancel Perplexity Pro auto-renewal?",
@@ -126,7 +126,7 @@ export const CATALOG: Merchant[] = [
       },
       {
         q: "How do I cancel Perplexity Pro after the free trial?",
-        a: "Cancel before the trial ends to avoid being charged: go to Settings \u2192 Subscription \u2192 Cancel Plan. If you were already charged at trial end without a clear warning, open an Exit Receipt \u2014 unexpected trial-conversion charges are one of the cases SpiteCash tracks for bounties.",
+        a: "Cancel before the trial ends to avoid being charged: go to Settings \u2192 Subscription \u2192 Cancel Plan, and create a free Exit Receipt at that moment so your cancellation has a timestamped record. If a trial-conversion charge arrives without clear warning, it can qualify for a bounty submission \u2014 \u20AC3 if it meets the six published criteria.",
       },
       {
         q: "How do I turn off auto-renewal in Perplexity?",
@@ -252,7 +252,7 @@ export const CATALOG: Merchant[] = [
       },
       {
         q: "I was charged by Prequel after my free trial \u2014 can I get a refund?",
-        a: "If you were charged without a clear warning that the trial was ending, request a refund through the App Store (reportaproblem.apple.com) or Google Play (support.google.com/googleplay/answer/2479637). If the refund is denied and the charge was unexpected, open an Exit Receipt on SpiteCash \u2014 silent trial-to-paid conversions are one of the cases the bounty covers.",
+        a: "If you were charged without a clear warning that the trial was ending, request a refund through the App Store (reportaproblem.apple.com) or Google Play (support.google.com/googleplay/answer/2479637); approval depends on the store\u2019s review. A silent trial-to-paid conversion can also qualify for a bounty submission \u2014 \u20AC3 if the case meets the six published criteria.",
       },
     ],
   },
@@ -297,7 +297,7 @@ export const CATALOG: Merchant[] = [
       },
       {
         q: "I was charged by MEGA after canceling \u2014 what do I do?",
-        a: "First confirm the cancellation went through: log in and check mega.io \u2192 My account \u2192 Plan. If the subscription still shows active, the cancellation did not complete. If it shows cancelled but you were still charged, open an Exit Receipt on SpiteCash before contacting your bank \u2014 a timestamped record strengthens any dispute.",
+        a: "First confirm the cancellation went through: log in and check mega.io \u2192 My account \u2192 Plan. If the subscription still shows active, the cancellation did not complete. If it shows cancelled but you were still charged, that charge can qualify for a bounty submission under the six published criteria \u2014 and if you created an Exit Receipt when you cancelled, its timestamp strengthens both the submission and any dispute with your bank.",
       },
     ],
   },
@@ -325,7 +325,7 @@ export const CATALOG: Merchant[] = [
       },
       {
         q: "How do I cancel Pimsleur free trial?",
-        a: "Cancel before the 7-day trial ends to avoid being charged. Use the same steps as a regular cancellation: web (pimsleur.com \u2192 Account \u2192 Subscription \u2192 Cancel Subscription), iOS Settings, or Google Play depending on where you signed up. If you were charged at trial end without a clear warning, open an Exit Receipt \u2014 silent trial conversions are one of the bounty cases SpiteCash covers.",
+        a: "Cancel before the 7-day trial ends to avoid being charged. Use the same steps as a regular cancellation: web (pimsleur.com \u2192 Account \u2192 Subscription \u2192 Cancel Subscription), iOS Settings, or Google Play depending on where you signed up \u2014 and create a free Exit Receipt at that moment for a timestamped record. A trial-conversion charge without clear warning can qualify for a bounty submission \u2014 \u20AC3 if it meets the six published criteria.",
       },
       {
         q: "Can I cancel Pimsleur by phone?",
