@@ -171,30 +171,30 @@ export const CATALOG: Merchant[] = [
     name: "Facetune",
     category: "photo_video",
     domain: "facetuneapp.com",
-    channels: ["ios", "android"],
+    channels: ["web", "ios", "android"],
     affiliateSource: "cancel-facetune",
-    gotcha: "Facetune is subscription-only on mobile — all billing runs through the App Store or Google Play, never through Facetune's website. The free trial converts to a paid yearly or weekly subscription automatically. Deleting the app does NOT cancel the subscription; you must cancel through the store you subscribed on, at least 24 hours before the trial or renewal date.",
-    platformNote: "Facetune has no web subscription — you can only cancel through the store where you signed up. iPhone/iPad: iOS Settings \u2192 tap your name \u2192 Subscriptions \u2192 Facetune \u2192 Cancel Subscription. Android: Google Play \u2192 profile icon \u2192 Payments & subscriptions \u2192 Subscriptions \u2192 Facetune \u2192 Cancel subscription. If Facetune does not appear in either list, check whether you have a second Apple ID or Google account — subscriptions are tied to the account that made the purchase, not the device. Deleting the app on either platform does not stop billing.",
+    gotcha: "Facetune subscriptions exist on three routes: App Store, Google Play, and web (via the Facetune Account Dashboard on facetuneapp.com). The free trial converts to a paid yearly or weekly subscription automatically. Deleting the app does NOT cancel the subscription; cancel through the route you subscribed on, at least 48 hours before the trial or renewal date \u2014 Lightricks' own policy recommends 48 hours.",
+    platformNote: "Cancel through the route where you signed up. Web: log in to the Facetune Account Dashboard at facetuneapp.com and cancel from your subscription settings \u2014 web subscriptions are not visible in the App Store or Google Play. iPhone/iPad: iOS Settings \u2192 tap your name \u2192 Subscriptions \u2192 Facetune \u2192 Cancel Subscription. Android: Google Play \u2192 profile icon \u2192 Payments & subscriptions \u2192 Subscriptions \u2192 Facetune \u2192 Cancel subscription. If Facetune does not appear in either store list, either you subscribed on the web or you used a second Apple ID / Google account \u2014 subscriptions are tied to the account that made the purchase, not the device. Deleting the app on any platform does not stop billing.",
     faq: [
       {
         q: "How do I cancel my Facetune subscription?",
-        a: "iPhone: iOS Settings \u2192 tap your name \u2192 Subscriptions \u2192 Facetune \u2192 Cancel Subscription. Android: Google Play \u2192 profile icon \u2192 Payments & subscriptions \u2192 Subscriptions \u2192 Facetune \u2192 Cancel. Cancel at least 24 hours before the renewal date to avoid the next charge. Deleting the app does not cancel anything.",
+        a: "Web: log in to your Facetune Account Dashboard at facetuneapp.com and cancel from subscription settings. iPhone: iOS Settings \u2192 tap your name \u2192 Subscriptions \u2192 Facetune \u2192 Cancel Subscription. Android: Google Play \u2192 profile icon \u2192 Payments & subscriptions \u2192 Subscriptions \u2192 Facetune \u2192 Cancel. Cancel at least 48 hours before the renewal date to avoid the next charge. Deleting the app does not cancel anything.",
       },
       {
         q: "How do I cancel the Facetune free trial before being charged?",
-        a: "Cancel through the App Store or Google Play at least 24 hours before the trial ends — the conversion to paid is automatic and often yearly, so the first charge can be large. Use the same steps as a normal cancellation. You keep trial access until the trial period ends even after canceling.",
+        a: "Cancel at least 48 hours before the trial ends \u2014 Lightricks' own policy recommends this window. The conversion to paid is automatic and often yearly, so the first charge can be large. Use the route where you signed up: web dashboard, App Store, or Google Play. You keep trial access until the trial period ends even after canceling.",
       },
       {
         q: "Facetune charged me after the free trial \u2014 can I get a refund?",
-        a: "Yes, often. App Store: go to reportaproblem.apple.com, sign in, find the Facetune charge, and request a refund \u2014 Apple frequently refunds first-time trial-conversion charges. Google Play: use the refund option on the order in your Play account, or Google's refund request form. If the refund is denied and you were charged without a clear warning, open an Exit Receipt on SpiteCash \u2014 unexpected trial conversions are one of the cases the \u20AC3 bounty covers.",
+        a: "You can request one. App Store: go to reportaproblem.apple.com, sign in, find the Facetune charge, and request a refund \u2014 approval depends on Apple's review. Google Play: use the refund option on the order in your Play account, or Google's refund request form. Web subscriptions: contact Lightricks support in writing. A trial-conversion charge without clear warning may also qualify for a bounty submission \u2014 if the case meets the six published criteria, you receive \u20AC3.",
       },
       {
         q: "Why was I charged for Facetune twice?",
-        a: "The most common causes: two subscriptions on two different accounts (a second Apple ID or Google account), or a weekly plan that renews more often than expected. Check Subscriptions on every account you use, cancel the ones you do not want, and request a refund for the duplicate through the store. If the double charge came after you cancelled, that qualifies for a bounty case \u2014 submit it with both charge records.",
+        a: "The most common causes: subscriptions on two different accounts (a second Apple ID or Google account, or a web subscription alongside a store one), or a weekly plan that renews more often than expected. Check subscriptions on every account and route you use, cancel the ones you do not want, and request a refund for the duplicate. If a charge arrived after a cancellation you had already documented, it can qualify for a bounty submission under the six published criteria.",
       },
       {
         q: "Does deleting the Facetune app cancel the subscription?",
-        a: "No. Uninstalling Facetune leaves the subscription active and billing continues through the App Store or Google Play. Always cancel through the store first (iOS Settings \u2192 Subscriptions, or Google Play \u2192 Subscriptions), confirm the end date on the confirmation screen, then delete the app.",
+        a: "No. Uninstalling Facetune leaves the subscription active and billing continues through whatever route you subscribed on \u2014 web, App Store, or Google Play. Always cancel first, confirm the end date on the confirmation screen, then delete the app.",
       },
     ],
   },
@@ -356,19 +356,19 @@ export const CATALOG: Merchant[] = [
     channels: ["web", "ios", "android"],
     affiliateSource: "cancel-everand",
     gotcha: "Scribd split into two products in late 2023: Everand (ebooks and audiobooks) and Scribd (documents). If you had an old Scribd subscription, it may have carried over to Everand — and some people end up paying for both without realizing. Check your bank statement for both \u201CScribd\u201D and \u201CEverand\u201D charge lines before assuming one cancellation covered everything.",
-    platformNote: "Where you cancel depends on where you subscribed. Web: log in at everand.com \u2192 Account Settings \u2192 Membership \u2192 Cancel Membership, and follow every confirmation step \u2014 the flow includes pause offers before the final cancel button. iPhone/iPad: iOS Settings \u2192 tap your name \u2192 Subscriptions \u2192 Everand \u2192 Cancel Subscription; the Everand website cannot cancel an App Store subscription. Android: Google Play \u2192 Subscriptions \u2192 Everand \u2192 Cancel. If you also see a separate \u201CScribd\u201D subscription anywhere, cancel it separately \u2014 they bill independently.",
+    platformNote: "Where you cancel depends on where you subscribed. Web: log in at everand.com \u2192 click your profile icon \u2192 Your account \u2192 Subscription \u2192 Cancel Subscription, and follow every confirmation step \u2014 the flow includes pause offers before the final cancel button. iPhone/iPad: iOS Settings \u2192 tap your name \u2192 Subscriptions \u2192 find the subscription (it may appear as either Everand or Scribd) \u2192 Cancel Subscription; the Everand website cannot cancel an App Store subscription. Android: Google Play \u2192 Subscriptions \u2192 Everand or Scribd \u2192 Cancel. If you also have a separate Scribd + SlideShare subscription, cancel it separately \u2014 they bill independently.",
     faq: [
       {
         q: "How do I cancel my Everand subscription?",
-        a: "Web: everand.com \u2192 Account Settings \u2192 Membership \u2192 Cancel Membership \u2014 click through the pause offers to reach the real confirmation. iOS: Settings \u2192 Apple ID \u2192 Subscriptions \u2192 Everand \u2192 Cancel. Android: Google Play \u2192 Subscriptions \u2192 Everand \u2192 Cancel. Use the platform where you originally subscribed.",
+        a: "Web: everand.com \u2192 profile icon \u2192 Your account \u2192 Subscription \u2192 Cancel Subscription \u2014 click through the pause offers to reach the real confirmation. iOS: Settings \u2192 Apple ID \u2192 Subscriptions \u2192 the entry may appear as Everand or Scribd \u2192 Cancel. Android: Google Play \u2192 Subscriptions \u2192 Everand or Scribd \u2192 Cancel. Use the platform where you originally subscribed.",
       },
       {
         q: "How do I cancel Everand and get a refund?",
-        a: "Cancellation stops future billing but does not automatically refund the current period. Web subscribers: contact Everand support in writing and request a refund of the specific charge \u2014 keep the reply. App Store: request at reportaproblem.apple.com. Google Play: use the order refund option. If you were charged after a trial without clear warning, or after you already cancelled, open an Exit Receipt \u2014 those cases can qualify for the \u20AC3 bounty.",
+        a: "Cancellation stops future billing but does not automatically refund the current period. Web subscribers: contact Everand support in writing and request a refund of the specific charge \u2014 keep the reply. App Store: request at reportaproblem.apple.com; approval depends on Apple's review. Google Play: use the order refund option. A charge after a trial without clear warning, or after a documented cancellation, may qualify for a bounty submission \u2014 if it meets the six published criteria, you receive \u20AC3.",
       },
       {
         q: "Why am I still being charged by Scribd after canceling Everand?",
-        a: "Scribd and Everand are separate products with separate billing since the 2023 split. Canceling one does not cancel the other. Check your bank statement for both names, log in to scribd.com separately, and cancel there too if a subscription is active. If you were double-billed for what you believed was one service, keep both charge records \u2014 that documentation strengthens a refund request.",
+        a: "Scribd and Everand are separate products with separate billing since the 2023 split \u2014 Everand's own documentation confirms the subscriptions are managed independently. Canceling one does not cancel the other. Check your bank statement for both names, log in to scribd.com separately, and cancel there too if a subscription is active. Keep both charge records \u2014 that documentation strengthens a refund request.",
       },
       {
         q: "What happens to my saved books after I cancel Everand?",
@@ -376,7 +376,7 @@ export const CATALOG: Merchant[] = [
       },
       {
         q: "How do I cancel the Everand free trial before being charged?",
-        a: "Cancel before the trial end date using the platform where you signed up (web, App Store, or Google Play) \u2014 access continues until the trial expires even after you cancel. If the charge already hit and the trial-to-paid conversion was not clearly flagged, open an Exit Receipt on SpiteCash before disputing with your bank.",
+        a: "Cancel before the trial end date using the platform where you signed up (web, App Store, or Google Play) \u2014 access continues until the trial expires even after you cancel. Best practice: create a free Exit Receipt at the moment you cancel, so the cancellation has a timestamped record. If a charge still arrives afterwards, your receipt pre-fills a bounty submission \u2014 and if the case meets the six published criteria, you receive \u20AC3.",
       },
     ],
   },
