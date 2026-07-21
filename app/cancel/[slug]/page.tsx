@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CATALOG, getMerchant, CATEGORY_LABELS, type Merchant, type FaqItem } from "@/lib/cancel-catalog";
 import { BountyCta, CancelFooter, CancelHeader, ExitReceiptCta, CANCEL_CSS } from "../shared";
+import { FunnelTracker } from "@/components/FunnelTracker";
 
 export const revalidate = 3600;
 
@@ -275,6 +276,7 @@ export default async function CancelGuidePage(
         />
       )}
       <CancelHeader />
+      <FunnelTracker slug={m.slug} source={m.affiliateSource} />
       <main className="sc-wrap">
         <nav className="sc-crumbs">
           <a href="/cancel">All guides</a> / {CATEGORY_LABELS[m.category]} / {m.name}

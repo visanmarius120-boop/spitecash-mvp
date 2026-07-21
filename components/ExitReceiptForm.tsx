@@ -2,9 +2,11 @@
 
 // components/ExitReceiptForm.tsx
 // Formular scurt, intentionat: bariera de intrare joasa fata de bounty case.
-// Prefill din ghiduri: ?merchant=..&murl=..
+// Prefill din ghiduri: ?merchant=..&murl=..&source=.. (source = tracking tag)
+// Instrumentat: form_view (mount), form_start (primul input), submit_success/error.
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { trackEvent } from "@/components/FunnelTracker";
 
 const EVIDENCE_ACCEPT =
   ".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf";
@@ -16,14 +18,28 @@ export function ExitReceiptForm() {
 
   const [merchantName, setMerchantName] = useState("");
   const [merchantUrl, setMerchantUrl] = useState("");
+  const [source, setSource] = useState("");
+  const formStarted = useRef(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const m = params.get("merchant");
     const u = params.get("murl");
+    const s = params.get("source");
     if (m) setMerchantName(m);
     if (u) setMerchantUrl(u);
+    if (s) setSource(s);
+    // Form is on screen — the funnel's fourth event.
+    trackEvent("exit_receipt_form_view", { source: s ?? undefined });
   }, []);
+
+  // First interaction with any field = form_start, once.
+  function markStarted() {
+    if (!formStarted.current) {
+      formStarted.current = true;
+      trackEvent("exit_receipt_form_start", { source: source || undefined });
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -32,6 +48,10 @@ export function ExitReceiptForm() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    // Source tracking: appended when the visitor arrived from a guide
+    // with an affiliateSource tag (e.g. cancel-mega). Lets us measure
+    // which /cancel pages actually produce Exit Receipts.
+    if (source) formData.append("source", source);
 
     try {
       const response = await fetch("/api/exit-receipt", {
@@ -43,8 +63,10 @@ export function ExitReceiptForm() {
         throw new Error(payload.error || "Could not create the receipt.");
       }
       setReceiptCode(payload.receiptCode);
+      trackEvent("exit_receipt_submit_success", { source: source || undefined });
       form.reset();
     } catch (error) {
+      trackEvent("exit_receipt_submit_error", { source: source || undefined });
       setErrorMessage(
         error instanceof Error ? error.message : "Something went wrong."
       );
@@ -64,15 +86,20 @@ export function ExitReceiptForm() {
           record whether the cancellation really worked.
         </p>
         <p>
-          Charged again later? A verified post-cancellation charge qualifies
-          for the <a href="/bounty-rules">€3 bounty</a>.
+          Charged again later? A post-cancellation charge that meets the{" "}
+          <a href="/bounty-rules">six published criteria</a> qualifies for the
+          €3 bounty.
         </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
+    <form
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+      onFocusCapture={markStarted}
+    >
       <div className="field">
         <label>App / merchant name *</label>
         <input
@@ -125,7 +152,8 @@ export function ExitReceiptForm() {
         <input name="confirmationProof" type="file" accept={EVIDENCE_ACCEPT} />
         <p className="help">
           If you upload it, we timestamp it and store a SHA-256 fingerprint —
-          your proof gets a verifiable date.
+          your proof gets a verifiable date. Blur or crop any sensitive details
+          first; that never affects validity.
         </p>
       </div>
 
